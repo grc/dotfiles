@@ -1,0 +1,86 @@
+;;  -*- mode: lisp -*-
+
+
+(in-package :stumpwm)
+
+(set-prefix-key (kbd "C-z"))
+
+;; By default arrow keys move focus, but I frequently have the Ctrl
+;; key held down at the time
+
+(define-key *root-map* (kbd "C-Left") "move-focus left")
+(define-key *root-map* (kbd "C-Right") "move-focus right")
+(define-key *root-map* (kbd "C-Up") "move-focus up")
+(define-key *root-map* (kbd "C-Down") "move-focus down")
+
+
+(setf *mouse-focus-policy* :click)
+
+
+
+(run-shell-command "xsetroot -solid DarkSlateBlue")
+(run-shell-command "xsetroot -cursor_name left_ptr")
+
+
+
+(set-focus-color   "gold1")
+(setf *mode-line-foreground-color* "GoldenRod")
+(set-unfocus-color "white")
+(set-normal-gravity :center)
+
+
+; Set an unadorned F11 to toggle full screen of current window
+(define-key *top-map* (kbd "F11") "fullscreen")
+
+
+(define-key *root-map* (kbd "c") "exec uxterm")
+(define-key *root-map* (kbd "C-c") "exec uxterm")
+
+;; Stumpwm & slime integratoion
+(ql:quickload "swank")
+(ql:quickload "quicklisp-slime-helper")
+(require 'swank)
+(defcommand swank () ()
+	    (setf stumpwm:*top-level-error-action* :break)
+	    (swank:create-server :port 4005
+				 :style swank:*communication-style*
+				 :dont-close t)
+	    (echo-string (current-screen) 
+			 "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
+
+
+
+
+
+(defun battery ()
+  (parse-integer (stumpwm:run-shell-command  "/Users/grc/bin/grc-battery" t)))
+
+(defun battery-level-string ()
+  "Battery level indication, coloured for use in mode line"
+  (let* ((bat-level (battery))
+	 (color-code (bar-zone-color bat-level 50 20 10 t)))
+    (format nil "Battery: ~A~A%" color-code bat-level)))
+
+(setf *mode-line-timeout* 60)
+
+
+
+(defun fmt-bat (ml)
+  (battery-level-string))
+
+(add-screen-mode-line-formatter #\B #'fmt-bat)
+
+
+(setf stumpwm:*screen-mode-line-format*
+      (list "%w | %B" ))
+
+
+
+(mode-line)
+
+
+(run-commands "gnewbg web")
+
+(define-frame-preference "web"
+    ;; frame raise lock (lock AND raise == jumpto)
+    (0 t   t :class "Conkeror"))

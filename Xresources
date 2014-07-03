@@ -1,0 +1,98 @@
+
+
+*.font: Inconsolata
+
+emacs.menuBar:off
+emacs.verticalScrollBar:off
+Emacs*cursorColor: DeepSkyBlue3
+Emacs*toolBar: 0
+Emacs*font: Inconsolata
+
+
+
+urxvt*fading: 40
+URxvt.perl-ext-common: macosx-clipboard
+URxvt*keysym.M-c: perl:macosx-clipboard:copy
+URxvt*keysym.M-v: perl:macosx-clipboard:paste
+
+
+*background: gray8
+*foreground: white
+
+
+
+xterm*faceName: Inconsolata
+xterm*faceSize:12
+xterm*termName: xterm-256color
+
+! On a black background, the default blue3 for bold is too dark
+*VT100*colorBD: CornflowerBlue
+*VT100*colorUL: MediumAquamarine
+
+
+xterm*metaSendsEscape: true
+xterm*utf8: true
+xterm*eightBitInput: false
+xterm*locale: true
+xterm*internalBorder:  10
+xterm*highlightSelection:  true
+xterm*VT100.colorBDMode:  on
+xterm*VT100.colorBD:  cyan
+xterm*VT100.colorULMode:  on
+xterm*VT100.colorUL:  magenta
+xterm*VT100.eightBitInput:  true
+xterm*VT100.eightBitOutput:  true
+xterm*scrollBar:  true
+xterm*scrollKey: true
+xterm*showMissingGlyphs: true
+xterm*VT100.titeInhibit:  true
+
+xterm*VT100.colorMode:  on
+xterm*VT100.dynamicColors:  on
+
+! Uncomment this to use color for underline attribute
+xterm*VT100.colorULMode:  on
+xterm*VT100.underLine:  off
+
+! Uncomment this to use color for the bold attribute
+*colorBDMode: on
+
+*color0: black
+*color1: OrangeRed1
+*color2: green3
+*color3: yellow3
+*color4: cyan 
+
+*color5: magenta2
+*color6: cyan3
+*color7: gray90
+*color8: gray30
+*color9: DeepSkyBlue2
+*color10: green
+*color11: yellow
+*color12: yellow
+*color13: magenta
+*color14: cyan
+*color15: red
+*colorUL: yellow
+*colorBD: white
+*cursorColor: lime green
+
+XTerm*StringConversionWarnings: on
+
+! Add scroll support to Xterm.  Shift Up 
+! F12 is used for autogenerating e20 dial commands.
+! F1/F2 changing font size
+*VT100.Translations: #override\
+     Shift <Key>Up: scroll-back(1,page)\n\
+     Shift <Key>Down: scroll-forw(1,page)\n\
+     Shift<Btn1Down>:		select-start()\n\
+     Shift<Btn1Motion>:		select-extend()\n\
+     Shift<Btn1Up>:			select-end(CLIPBOARD)\n\
+     <Btn1Up>: select-end(PRIMARY,CLIPBOARD)\n\
+     None<Key>F12: string("xcom dial line:1 protocol:sip number:")\n\
+     Shift<Key>F12: string("xcom dial line:2 protocol:sip number:")\n\
+     <Key>F2: smaller-vt-font()\n\
+     <Key>F1: larger-vt-font()\
+
+XTerm*saveLines: 5000
