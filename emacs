@@ -3,6 +3,43 @@
 (message "Reading .emacs")
 
 (server-start)
+
+;;; Set up my load path
+
+(let ((default-directory "~/elisp"))
+  (normal-top-level-add-subdirs-to-load-path))
+
+(let ((default-directory "~/git-repos"))
+  (normal-top-level-add-to-load-path '("ag.el"
+                                       "dash.el"
+                                       "elnode"
+                                       "emacs-db"
+                                       "emacs-fakir"
+                                       "emacs-kv"
+                                       "emacs-kv"
+                                       "emacs-noflet"
+                                       "emacs-request"
+                                       "emacs-web"
+                                       "esxml"
+                                       "esxml"
+                                       "flymake-easy"
+                                       "flymake-jslint"
+                                       "git-modes"
+                                       "js2-mode"
+                                       "magit"
+                                       "multiple-cursors"
+                                       "org-mode/lisp"
+                                       "org-trello"
+                                       "popwin-el"
+                                       "predictive"
+                                       "s.el"
+                                       "smex"
+                                       "yasnippet" )))
+
+
+
+
+
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t)
 (set-mouse-color "white")
@@ -14,15 +51,15 @@
 (require 'dired-x)
 
 
-(add-to-list 'load-path "~/git-repos/ag.el/")
+
 (require 'ag)
 
 ;;; Javascript
 
-(add-to-list 'load-path "~/git-repos/js2-mode")
+
 (require 'js2-mode)
 
-(add-to-list 'load-path "~/elisp")
+
 (require 'js-comint)
 ;; Use node as our repl
 (setq inferior-js-program-command "node")
@@ -36,14 +73,14 @@
 			    (local-set-key "\C-cl" 'js-load-file-and-go)
 			    ))
 
-(add-to-list 'load-path "~/git-repos/flymake-easy")
-(add-to-list 'load-path "~/git-repos/flymake-jslint")
+
+
 (require 'flymake-jslint)
 (add-hook 'js2-mode-hook 'flymake-jslint-load)
 
 
 ;;; yasnippet
-(add-to-list 'load-path "~/git-repos/yasnippet")
+
 (require 'yasnippet)
 (yas-global-mode 1)
 
@@ -138,7 +175,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;;; https://github.com/nonsequitur/smex/
 ;;; Faster completion for M-p 
-(add-to-list 'load-path "~/git-repos/smex")
+
 (require 'smex)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -149,7 +186,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;;;; BBDB 
 ;; Note that when building BBDB from scratch from CVS you need to do a 
 ;; `make autoloads' before 'make'
-(add-to-list 'load-path "~/elisp/bbdb/lisp")
+
 (require 'bbdb)
 (bbdb-initialize 'gnus 'message)
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
@@ -191,7 +228,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 
-(add-to-list 'load-path "~/elisp")
+
 (require 'clojure-mode)
 
 (add-hook 'clojure-mode-hook 'show-paren-mode)
@@ -201,7 +238,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 (message "Initialising org-mode")
-(add-to-list 'load-path "~/git-repos/org-mode/lisp")
+
 (require 'org)
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -299,8 +336,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq ediff-split-window-function 'split-window-horizontally)
 
-(add-to-list 'load-path "~/git-repos/magit")
-(add-to-list 'load-path "~/git-repos/git-modes")
+
+
 (require 'magit)
 
 (eval-after-load 'info 
@@ -318,25 +355,25 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 ;;; Org Trello integration
-(add-to-list 'load-path "~/git-repos/dash.el")
+
 (require 'dash)
-(add-to-list 'load-path "~/git-repos/emacs-request")
+
 (require 'request)
-(add-to-list 'load-path "~/git-repos/elnode")
-(add-to-list 'load-path "~/git-repos/emacs-fakir")
-(add-to-list 'load-path "~/git-repos/emacs-noflet")
-(add-to-list 'load-path "~/git-repos/s.el")
-(add-to-list 'load-path "~/git-repos/emacs-web")
-(add-to-list 'load-path "~/git-repos/emacs-db")
-(add-to-list 'load-path "~/git-repos/esxml")
-(add-to-list 'load-path "~/git-repos/emacs-kv")
+
+
+
+
+
+
+
+
 (require 'noflet)
 (require 'fakir)
 (require 'elnode)
 (require 's)
 (require 'web)
 (require 'db)
-(add-to-list 'load-path "~/git-repos/org-trello")
+
 (require 'org-trello)
 
 
@@ -524,12 +561,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 (require 'tex-site)
-
-;;; pcomplete 
-(add-to-list 'load-path "~/elisp/pcmpl-git" )
 (require 'pcmpl-git)
 (require 'pcmpl-lein)
-(add-to-list 'load-path "~/git-repos/predictive")
 
 
 ;; boxquote provides the ability to add nicely formatted textblocks to
@@ -593,7 +626,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 ;; multiple cursors
-(add-to-list 'load-path "~/git-repos/multiple-cursors")
+
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -601,13 +634,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;;; esxml is an XML to sexpr librray used by my vidconf package
-(add-to-list 'load-path "~/git-repos/esxml")
-(add-to-list 'load-path "~/git-repos/emacs-kv")
+
+
 
 
 
 ;;; popwin.el from git@github.com:m2ym/popwin-el.git
-(add-to-list 'load-path "~/git-repos/popwin-el")
+
 (require 'popwin)
 (popwin-mode 1)
 
