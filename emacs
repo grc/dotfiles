@@ -5,6 +5,7 @@
 (server-start)
 
 ;;; Set up my load path
+(add-to-list 'load-path "~/elisp")
 
 (let ((default-directory "~/elisp"))
   (normal-top-level-add-subdirs-to-load-path))
@@ -35,10 +36,6 @@
                                        "s.el"
                                        "smex"
                                        "yasnippet" )))
-
-
-
-
 
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t)
