@@ -14,6 +14,9 @@
 (require 'dired-x)
 
 
+(add-to-list 'load-path "~/git-repos/ag.el/")
+(require 'ag)
+
 ;;; Javascript
 
 (add-to-list 'load-path "~/git-repos/js2-mode")
