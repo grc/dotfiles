@@ -1,0 +1,21 @@
+#!/bin/bash
+# Set up symlinks to dot files
+DOTFILESDIR=~/git-repos/dotfiles
+DOTFILES=(emacs gnus stumpwmrc Xresources zshrc)
+
+for FILE in ${DOTFILES[@]}
+do
+    echo $FILE
+    if [[ -f $HOME/.$FILE ]] || [[ -h $HOME/.$FILE ]]
+    then
+        echo "Moving .$FILE to .$FILE.old"
+        mv $HOME/.$FILE $HOME/.$FILE.old
+    fi
+    
+    ln -s $DOTFILESDIR/$FILE $HOME/.$FILE
+
+done
+
+
+
+
