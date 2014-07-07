@@ -1,0 +1,6 @@
+!keycode 32 = backspace
+
+! Allow emacs and conkeror to use
+! OSX's cmd key as Meta
+clear mod2
+add mod4 = Meta_L

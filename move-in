@@ -1,7 +1,12 @@
 #!/bin/bash
 # Set up symlinks to dot files
 DOTFILESDIR=~/git-repos/dotfiles
-DOTFILES=(emacs gnus stumpwmrc Xresources zshrc)
+DOTFILES=(emacs
+          gnus
+          stumpwmrc
+          xmodmap
+          Xresources
+          zshrc)
 
 for FILE in ${DOTFILES[@]}
 do
