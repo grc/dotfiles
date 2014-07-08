@@ -10,32 +10,6 @@
 (let ((default-directory "~/elisp"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(let ((default-directory "~/git-repos"))
-  (normal-top-level-add-to-load-path '("ag.el"
-                                       "dash.el"
-                                       "elnode"
-                                       "emacs-db"
-                                       "emacs-fakir"
-                                       "emacs-kv"
-                                       "emacs-kv"
-                                       "emacs-noflet"
-                                       "emacs-request"
-                                       "emacs-web"
-                                       "esxml"
-                                       "esxml"
-                                       "flymake-easy"
-                                       "flymake-jslint"
-                                       "git-modes"
-                                       "js2-mode"
-                                       "magit"
-                                       "multiple-cursors"
-                                       "org-mode/lisp"
-                                       "org-trello"
-                                       "popwin-el"
-                                       "predictive"
-                                       "s.el"
-                                       "smex"
-                                       "yasnippet" )))
 
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t)
