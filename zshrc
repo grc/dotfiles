@@ -57,6 +57,9 @@ fi
 
 
 
+# LaTex
+export TEXINPUTS=:.:~/.latex:$TEXINPUTS
+
 # stop ^S from locking the terminal
 setopt noflowcontrol
 
