@@ -24,7 +24,7 @@
 
 
 (set-focus-color   "gold1")
-(setf *mode-line-foreground-color* "GoldenRod")
+(setf *mode-line-foreground-color* "green")
 (set-unfocus-color "white")
 (set-normal-gravity :center)
 
@@ -50,7 +50,44 @@
 
 
 
+;;; Wi-Fi mode line status
+;;; Currently hardwired for OSX
+(defparameter *known-wifi-networks*
+  '("sjld" "wiremore")
+  "List of expected wifi networks, connection to which will not be of concern.")
 
+
+(defun wifi-info ()
+  "Return a string containing SSID and IP address.  
+
+String is colour coded to warn of unknown or missing networks"
+  (let* ((ssid (wifi-ssid))
+         (info (concatenate 'string ssid ":" (wifi-ip))))
+    (cond
+      ((not ssid) (concatenate 'string *bar-crit-color* "No wifi" "^n "))
+      ((find ssid *known-wifi-networks* :test #'string=) info)
+      (t (concatenate 'string *bar-hi-color* info "^n ")))))
+  
+
+
+(defun wifi-ip ()
+  (string-right-trim
+   '(#\Newline)
+   (stumpwm:run-shell-command "networksetup -getinfo Wi-Fi | awk '/^IP address:/ {print $3}'" t)))
+
+
+(defun wifi-ssid ()
+  "OSX specific wifi ssid command.
+Returns nil if not connected to any network"
+  (let ((ssid (string-right-trim
+               '(#\Newline)
+               (stumpwm:run-shell-command "airport --getinfo | awk '/ SSID/{print $2}'" t))))
+    (if (> (length ssid) 0)
+        ssid
+        nil)))
+
+
+;; Battery status
 
 (defun battery ()
   (parse-integer (stumpwm:run-shell-command  "/Users/grc/bin/grc-battery" t)))
@@ -61,20 +98,22 @@
 	 (color-code (bar-zone-color bat-level 50 20 10 t)))
     (format nil "Battery: ~A~A%" color-code bat-level)))
 
+
+;; Set up the mode line
+
 (setf *mode-line-timeout* 60)
-
-
 
 (defun fmt-bat (ml)
   (battery-level-string))
 
-(add-screen-mode-line-formatter #\B #'fmt-bat)
+(defun fmt-wifi (ml)
+  (wifi-info))
 
+(add-screen-mode-line-formatter #\B #'fmt-bat)
+(add-screen-mode-line-formatter #\W #'fmt-wifi)
 
 (setf stumpwm:*screen-mode-line-format*
-      (list "%w | %B" ))
-
-
+      (list "%w | %W %B" ))
 
 (mode-line)
 
