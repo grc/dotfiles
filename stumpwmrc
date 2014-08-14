@@ -50,6 +50,36 @@
 
 
 
+
+
+
+(defun networksetup-ip (device)
+  "Returns the IP address of device if present, nil otherwise"
+  (let (( ip (string-right-trim
+           '(#\Newline)
+           (run-shell-command
+            (concatenate 'string "networksetup -getinfo \""
+                         device
+                         "\"| awk '/^IP address:/ {print $3}' " ) t ))))
+    (if (> (length ip) 0)
+        ip
+        nil)))
+
+(defun wifi-ip ()
+  (networksetup-ip "WiFi"))
+
+
+
+(defun wifi-ssid ()
+  "OSX specific wifi ssid command.
+Returns nil if not connected to any network"
+  (let ((ssid (string-right-trim
+               '(#\Newline)
+               (stumpwm:run-shell-command "airport --getinfo | awk '/ SSID/{print $2}'" t))))
+    (if (> (length ssid) 0)
+        ssid
+        nil)))
+
 ;;; Wi-Fi mode line status
 ;;; Currently hardwired for OSX
 (defparameter *known-wifi-networks*
@@ -69,22 +99,16 @@ String is colour coded to warn of unknown or missing networks"
       (t (concatenate 'string *bar-hi-color* info "^n ")))))
   
 
-
-(defun wifi-ip ()
-  (string-right-trim
-   '(#\Newline)
-   (stumpwm:run-shell-command "networksetup -getinfo Wi-Fi | awk '/^IP address:/ {print $3}'" t)))
+(defun usb-ip ()
+  "Returns the USB Ethernet IP address if available"
+  (networksetup-ip "USB Ethernet"))
 
 
-(defun wifi-ssid ()
-  "OSX specific wifi ssid command.
-Returns nil if not connected to any network"
-  (let ((ssid (string-right-trim
-               '(#\Newline)
-               (stumpwm:run-shell-command "airport --getinfo | awk '/ SSID/{print $2}'" t))))
-    (if (> (length ssid) 0)
-        ssid
-        nil)))
+
+(defun network-status ()
+  "Returns a string representing the status of the primary network connection"
+  (some #'identity (list (usb-ip) (wifi-info))))
+
 
 
 ;; Battery status
@@ -106,11 +130,11 @@ Returns nil if not connected to any network"
 (defun fmt-bat (ml)
   (battery-level-string))
 
-(defun fmt-wifi (ml)
-  (wifi-info))
+(defun fmt-network (ml)
+  (network-status))
 
 (add-screen-mode-line-formatter #\B #'fmt-bat)
-(add-screen-mode-line-formatter #\W #'fmt-wifi)
+(add-screen-mode-line-formatter #\W #'fmt-network)
 
 (setf stumpwm:*screen-mode-line-format*
       (list "%w | %W %B" ))
