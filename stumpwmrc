@@ -51,22 +51,29 @@
 
 
 
+(defparameter *network-interfaces*
+    '((:display . "Display Ethernet")
+      (:usb . "USB Ethernet")
+      (:wifi . "Wi-Fi"))
+  "OSX Interface names accepted by the `networksetup' utility.")
 
 
 (defun networksetup-ip (device)
-  "Returns the IP address of device if present, nil otherwise"
+  "Returns the IP address of device if present, nil otherwise.
+`device' is a key into the *network-interfaces* alist."
+  (assert (find device (map 'list #'car *network-interfaces*)))
   (let (( ip (string-right-trim
            '(#\Newline)
            (run-shell-command
             (concatenate 'string "networksetup -getinfo \""
-                         device
+                         (cdr (assoc device *network-interfaces*))
                          "\"| awk '/^IP address:/ {print $3}' " ) t ))))
     (if (> (length ip) 0)
         ip
         nil)))
 
 (defun wifi-ip ()
-  (networksetup-ip "WiFi"))
+  (networksetup-ip :wifi))
 
 
 
@@ -99,15 +106,12 @@ String is colour coded to warn of unknown or missing networks"
       (t (concatenate 'string *bar-hi-color* info "^n ")))))
   
 
-(defun usb-ip ()
-  "Returns the USB Ethernet IP address if available"
-  (networksetup-ip "USB Ethernet"))
-
-
 
 (defun network-status ()
   "Returns a string representing the status of the primary network connection"
-  (some #'identity (list (usb-ip) (wifi-info))))
+  (some #'identity (list (networksetup-ip :display)
+                         (networksetup-ip :usb)
+                         (wifi-info))))
 
 
 
@@ -139,7 +143,7 @@ String is colour coded to warn of unknown or missing networks"
 (setf stumpwm:*screen-mode-line-format*
       (list "%w | %W %B" ))
 
-(mode-line)
+;(mode-line)
 
 
 (run-commands "gnewbg web")
