@@ -4,7 +4,8 @@ DOTFILESDIR=~/git-repos/dotfiles
 DOTFILES=(stumpwmrc
           xmodmap
           Xresources
-          zshrc)
+          zshrc
+          xinitrc.d)
 
 for FILE in ${DOTFILES[@]}
 do
