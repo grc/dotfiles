@@ -3,7 +3,7 @@
 export PATH=~/bin:/opt/local/bin:$PATH
 export TZ=Europe/London
 export LANG=en_GB.UTF-8
-
+export INFOPATH=~/info:/usr/local/share/info/:/usr/share/info/:/usr/local/share/info/
 
 bindkey -me 2> /dev/null
 
