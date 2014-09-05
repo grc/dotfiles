@@ -72,9 +72,6 @@
         ip
         nil)))
 
-(defun wifi-ip ()
-  (networksetup-ip :wifi))
-
 
 
 (defun wifi-ssid ()
@@ -99,16 +96,22 @@ Returns nil if not connected to any network"
 
 String is colour coded to warn of unknown or missing networks"
   (let* ((ssid (wifi-ssid))
-         (info (concatenate 'string ssid ":" (wifi-ip))))
+         (info (concatenate 'string ssid ":" (networksetup-ip :wifi))))
     (cond
       ((not ssid) (concatenate 'string *bar-crit-color* "No wifi" "^n "))
       ((find ssid *known-wifi-networks* :test #'string=) info)
       (t (concatenate 'string *bar-hi-color* info "^n ")))))
-  
+
+(defun network-service-order ()
+  "Returns an ordered list of OSX network devices."
+  (assert (find :DARWIN *features*))
+  (let ((shell-output (run-shell-command "networksetup -listnetworkserviceorder |\
+awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
+    (string-left-trim " " (split-string shell-output '(#\Newline)))))
 
 
 (defun network-status ()
-  "Returns a string representing the status of the primary network connection"
+  "Returns a string representing the status of the primary network connection."
   (some #'identity (list (networksetup-ip :display)
                          (networksetup-ip :usb)
                          (wifi-info))))
@@ -143,7 +146,7 @@ String is colour coded to warn of unknown or missing networks"
 (setf stumpwm:*screen-mode-line-format*
       (list "%w | %W %B" ))
 
-;(mode-line)
+(mode-line)
 
 
 (run-commands "gnewbg web")
