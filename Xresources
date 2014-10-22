@@ -10,8 +10,8 @@ Emacs*font: Inconsolata
 
 
 
-URxvt*keysym.M-c: perl:macosx-clipboard:copy
-URxvt*keysym.M-v: perl:macosx-clipboard:paste
+!URxvt*keysym.M-c: perl:macosx-clipboard:copy
+!URxvt*keysym.M-v: perl:macosx-clipboard:paste
 
 URxvt.keysym.F12: xcom dial line:1 protocol:sip number:
 URxvt.keysym.Shift-F12: xcom dial line:2 protocol:sip number:
@@ -19,7 +19,7 @@ URxvt.keysym.Shift-F12: xcom dial line:2 protocol:sip number:
 URxvt.font: xft:Inconsolata
 URxvt.insecure: true
 URxvt.perl-ext-common: macosx-clipboard
-Urxvt.fading: 90
+Urxvt.fading: 20
 
 
 *background: gray8
@@ -68,7 +68,7 @@ xterm*VT100.underLine:  off
 *color1: OrangeRed1
 *color2: green3
 *color3: yellow3
-*color4: cyan 
+*color4: cyan
 
 *color5: magenta2
 *color6: cyan3
