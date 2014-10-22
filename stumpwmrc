@@ -33,8 +33,8 @@
 (define-key *top-map* (kbd "F11") "fullscreen")
 
 
-(define-key *root-map* (kbd "c") "exec uxterm")
-(define-key *root-map* (kbd "C-c") "exec uxterm")
+(define-key *root-map* (kbd "c") "exec urxvt")
+(define-key *root-map* (kbd "C-c") "exec urxvt")
 
 ;; Stumpwm & slime integratoion
 (ql:quickload "swank")
@@ -81,18 +81,22 @@ Returns nil if not connected to any network"
 ;;; Wi-Fi mode line status
 ;;; Currently hardwired for OSX
 (defparameter *known-wifi-networks*
-  '("sjld" "wiremore")
+  '("sjld"             
+    "wiremore"         
+    "Pexip")
   "List of expected wifi networks, connection to which will not be of concern.")
 
+(defvar *no-network-message*
+  "No network")
 
 (defun wifi-info ()
   "Return a string containing SSID and IP address.  
 
 String is colour coded to warn of unknown or missing networks"
   (let* ((ssid (wifi-ssid))
-         (info (concatenate 'string ssid ":" (networksetup-ip "Wi-Fi"))))
+         (info (concatenate 'string ssid ": " (networksetup-ip "Wi-Fi"))))
     (cond
-      ((not ssid) (concatenate 'string *bar-crit-color* "No wifi" "^n "))
+      ((not ssid) (concatenate 'string *bar-crit-color* *no-network-message* "^n "))
       ((find ssid *known-wifi-networks* :test #'string=) info)
       (t (concatenate 'string *bar-hi-color* info "^n ")))))
 
@@ -144,7 +148,7 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
 (add-screen-mode-line-formatter #\W #'fmt-network)
 
 (setf stumpwm:*screen-mode-line-format*
-      (list "%w | %W %B" ))
+      (list "%w  %W %B" ))
 
 (mode-line)
 

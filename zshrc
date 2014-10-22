@@ -1,8 +1,17 @@
+# zshrc
+# Zsh configuration, mostly used on OSX though trying o keep
+# compatible with Linux too.
+# -*- mode: shell-script -*-
 
-#  -*- mode: shell-script -*-
-export PATH=~/bin:/opt/local/bin:$PATH
+
+# Macports uses the /opt/local/bin path
+[[ -x /opt/local/bin/port ]] && PATH=/opt/local/bin:$PATH
+export PATH=~/bin:$PATH  
+
 export TZ=Europe/London
 export LANG=en_GB.UTF-8
+
+
 export INFOPATH=~/info:/usr/local/share/info/:/usr/share/info/:/usr/local/share/info/
 
 bindkey -me 2> /dev/null
@@ -11,13 +20,11 @@ bindkey -me 2> /dev/null
 fpath=(~/zsh $fpath)
 
 
+# Use emacsclient as the default editor, firing up an emacs server if
+# there isn't one running already.
 export EDITOR='emacsclient -c'
+export ALTERNATE_EDITOR='emacs'
 
-
-
-# Global alias shortcuts
-alias -g M="| less"
-alias -g G="| grep"
 
 alias uxterm=xterm
 
@@ -83,7 +90,7 @@ bindkey "^[r" history-beginning-search-backward
 setopt prompt_bang # ! in prompt will be replaced by history number
 
 autoload -U colors && colors
-prev_exit="%(?..$fg[red][%?])"
+prev_exit="%(?..%{$fg[red]%}[%?])"
 export PROMPT="%{$fg[green]%}! %n@%m: %~$prev_exit%{$reset_color%} "
 
 
@@ -118,7 +125,7 @@ fi
 
 
 # Auto correction
-setopt correct # Just correct teh command, correctings args gives too many errors
+setopt correct # Just correct the command, correctings args gives too many errors
 
 
 
@@ -145,7 +152,7 @@ bindkey '\C-x\C-e' edit-command-line
 
 insert_sudo () { zle beginning-of-line; zle -U "sudo " }
 zle -N insert-sudo insert_sudo
-bindkey "^[s" insert-sudo
+bindkey "^[s" insert-sudo # M-s
 
 
 
@@ -283,4 +290,15 @@ function most_useless_use_of_zsh {
         done
         echo
     done
+}
+
+
+function update_term_title {
+    # Set term title to $1
+    echo "\e]0; $1\e\\"
+}
+
+
+function chpwd {
+    update_term_title ${${(D)PWD}#*/*/} # No more than two directories, in ~ form
 }
