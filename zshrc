@@ -152,7 +152,7 @@ bindkey '\C-x\C-e' edit-command-line
 
 insert_sudo () { zle beginning-of-line; zle -U "sudo " }
 zle -N insert-sudo insert_sudo
-bindkey "^[s" insert-sudo # M-s
+bindkey "^[1" insert-sudo # M-1
 
 
 

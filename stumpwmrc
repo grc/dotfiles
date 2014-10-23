@@ -61,7 +61,8 @@
            (run-shell-command
             (concatenate 'string "networksetup -getinfo \""
                          device ;  (cdr (assoc device *network-interfaces*))
-                         "\"| awk '/^IP address:/ {print $3}' " ) t ))))
+                         "\"| awk '/^IP address:/ {print $3}' " )
+            t ))))
     (if (> (length ip) 0)
         ip
         nil)))

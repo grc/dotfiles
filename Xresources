@@ -9,18 +9,21 @@ Emacs*toolBar: 0
 Emacs*font: Inconsolata
 
 
-
-!URxvt*keysym.M-c: perl:macosx-clipboard:copy
-!URxvt*keysym.M-v: perl:macosx-clipboard:paste
-
+! Command string shortcuts for TANDBERG video endpoints
 URxvt.keysym.F12: xcom dial line:1 protocol:sip number:
 URxvt.keysym.Shift-F12: xcom dial line:2 protocol:sip number:
 
+! Shify Up & Down for scrolling (no PageUp key on laptop keyboard
+URxvt.keysym.Shift-Up: command:\033]720;1\007
+URxvt.keysym.Shift-Down: command:\033]721;1\007
+
 URxvt.font: xft:Inconsolata
 URxvt.insecure: true
-URxvt.perl-ext-common: macosx-clipboard
+URxvt.perl-ext-common: default,matcher
 Urxvt.fading: 20
-
+URxvt.saveLines: 2000
+URxvt.perl-lib: /opt/local/lib/urxvt/perl/ ! MacPorts
+URxvt.matcher.button: 1
 
 *background: gray8
 *foreground: white
@@ -57,8 +60,7 @@ xterm*VT100.titeInhibit:  true
 xterm*VT100.colorMode:  on
 xterm*VT100.dynamicColors:  on
 
-! Uncomment this to use color for underline attribute
-xterm*VT100.colorULMode:  on
+
 xterm*VT100.underLine:  off
 
 ! Uncomment this to use color for the bold attribute
@@ -81,8 +83,8 @@ xterm*VT100.underLine:  off
 *color13: magenta
 *color14: cyan
 *color15: red
-*colorUL: yellow
-*colorBD: white
+*colorUL: cyan
+*colorBD: green1
 *cursorColor: lime green
 
 XTerm*StringConversionWarnings: on
