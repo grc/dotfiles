@@ -6,6 +6,8 @@
 
 # Macports uses the /opt/local/bin path
 [[ -x /opt/local/bin/port ]] && PATH=/opt/local/bin:$PATH
+
+[[ -x /opt/local/bin/aws ]] && PATH=/usr/local/bin:$PATH
 export PATH=~/bin:$PATH  
 
 export TZ=Europe/London
@@ -165,7 +167,7 @@ bindkey "^[1" insert-sudo # M-1
 # are ancient compared with the current GNU ones installed
 # using mac ports
 
-MACPORT_UTILS=(shuf sort)
+MACPORT_UTILS=(shuf sort sed)
 MACPORT_PATH=/opt/local/bin
 for UTIL in $MACPORT_UTILS
 do
