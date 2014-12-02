@@ -82,7 +82,8 @@ Returns nil if not connected to any network"
 ;;; Wi-Fi mode line status
 ;;; Currently hardwired for OSX
 (defparameter *known-wifi-networks*
-  '("sjld"             
+  '("sjld"
+    "sjld-fast"
     "wiremore"         
     "Pexip")
   "List of expected wifi networks, connection to which will not be of concern.")
