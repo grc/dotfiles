@@ -54,13 +54,12 @@
 
 (defun networksetup-ip (device)
   "Returns the IP address of device if present, nil otherwise.
-`device' is a key into the *network-interfaces* alist."
- ; (assert (find device (map 'list #'car *network-interfaces*)))
+`device' is one of the devices returned by `network-service-order'"
   (let (( ip (string-right-trim
            '(#\Newline)
            (run-shell-command
             (concatenate 'string "networksetup -getinfo \""
-                         device ;  (cdr (assoc device *network-interfaces*))
+                         device 
                          "\"| awk '/^IP address:/ {print $3}' " )
             t ))))
     (if (> (length ip) 0)
@@ -68,6 +67,18 @@
         nil)))
 
 
+(defun wired-info (device)
+  "Return a colour coded IP address for a wired network device.
+Address is highlighghted in `*bar-hi-color*' if it is a link local
+one as this usually means that DHCP has failed."
+  (let ((link-local-prefix "169.254")
+        (ip-address (networksetup-ip device)))
+    (if ip-address
+        (if (string= ip-address link-local-prefix :end1 (length link-local-prefix))
+            (concatenate 'string *bar-hi-color*
+                         ip-address
+                         "^n ")
+            ip-address))))
 
 (defun wifi-ssid ()
   "OSX specific wifi ssid command.
@@ -115,7 +126,7 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
 (defun network-status-display (service)
   (if (string= service "Wi-Fi")
       (wifi-info)
-      (networksetup-ip service)))
+      (wired-info service)))
 
 
 (defun network-status ()
