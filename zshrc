@@ -238,14 +238,6 @@ alias vssh='ORIGINAL_DIR=$(pwd);~vagrant; vagrant up; vagrant ssh; cd $ORIGINAL_
 # prompt
 setopt prompt_subst
 
-if [[ -z $SSH_CONNECTION ]];
-then
-    # we are not ssh'd in
-    NORMAL_PROMPT=green
-else
-    NORMAL_PROMPT=yellow
-fi
-
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[$NORMAL_PROMPT]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%}"
