@@ -93,7 +93,16 @@ setopt prompt_bang # ! in prompt will be replaced by history number
 
 autoload -U colors && colors
 prev_exit="%(?..%{$fg[red]%}[%?])"
-export PROMPT="%{$fg[green]%}! %n@%m: %~$prev_exit%{$reset_color%} "
+
+if [[ -z $SSH_CONNECTION ]];
+then
+    # we are not ssh'd in
+    NORMAL_PROMPT=green
+else
+    NORMAL_PROMPT=cyan
+fi
+
+export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m: %~$prev_exit%{$reset_color%} "
 
 
 
