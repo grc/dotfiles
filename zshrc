@@ -102,7 +102,7 @@ else
     NORMAL_PROMPT=cyan
 fi
 
-export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~$prev_exit%{$reset_color%}: "
+export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~$prev_exit>%{$reset_color%} "
 
 
 
