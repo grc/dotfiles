@@ -1,7 +1,7 @@
-# zshrc
-# Zsh configuration, mostly used on OSX though trying o keep
+# zshrc -*- mode: sh; -*-
+# Zsh configuration, mostly used on OSX though trying to keep
 # compatible with Linux too.
-# -*- mode: shell-script -*-
+
 
 
 # Macports uses the /opt/local/bin path
@@ -99,7 +99,7 @@ then
     # we are not ssh'd in
     NORMAL_PROMPT=green
 else
-    NORMAL_PROMPT=cyan
+    NORMAL_PROMPT=yellow
 fi
 
 export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~$prev_exit>%{$reset_color%} "
