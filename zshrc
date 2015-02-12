@@ -102,7 +102,21 @@ else
     NORMAL_PROMPT=yellow
 fi
 
-export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~$prev_exit>%{$reset_color%} "
+# prompt
+setopt prompt_subst
+
+autoload -Uz vcs_info
+precmd()
+{
+    vcs_info
+    RPROMPT=$vcs_info_msg_0_
+}
+
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:git*' formats "%{$fg[red]%}%u%c%{$fg[$NORMAL_PROMPT]%}[%b]%{$reset_color%}"
+
+export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~$prev_exit >%{$reset_color%} "
 
 
 
@@ -235,48 +249,8 @@ export PYTHONPATH="/Users/grc/pexdev/mcu"
 # developmant shortcuts
 alias vssh='ORIGINAL_DIR=$(pwd);~vagrant; vagrant up; vagrant ssh; cd $ORIGINAL_DIR'
 
-# prompt
-setopt prompt_subst
 
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[$NORMAL_PROMPT]%}["
-ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}*%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
- 
-# show git branch/tag, or name-rev if on detached head
-parse_git_branch() {
-  (command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-}
- 
-# show red star if there are uncommitted changes
-parse_git_dirty() {
-  if command git diff-index --quiet HEAD 2> /dev/null; then
-    echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
-  else
-    echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
-  fi
-}
- 
-# if in a git repo, show dirty indicator + git branch
-git_custom_status() {
-  local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_PREFIX${git_where#(refs/heads/|tags/)}$ZSH_THEME_GIT_PROMPT_SUFFIX"
-}
- 
-# show current rbenv version if different from rbenv global
-rbenv_version_status() {
-  local ver=$(rbenv version-name)
-  [ "$(rbenv global)" != "$ver" ] && echo "[$ver]"
-}
- 
-# put fancy stuff on the right
-if which rbenv &> /dev/null; then
-  RPS1='$(git_custom_status)%{$fg[red]%}$(rbenv_version_status)%{$reset_color%} $EPS1'
-else
-  RPS1='$(git_custom_status) $EPS1'
-fi
- 
 
 # Needed to correctly build emacs in a macports based X11 set up
 # I was experiencing this bug: http://trac.macports.org/ticket/42928
@@ -288,21 +262,6 @@ then
 fi
 
 
-
-function most_useless_use_of_zsh {
-   local lines columns colour a b p q i pnew
-   ((columns=COLUMNS-1, lines=LINES-1, colour=0))
-   for ((b=-1.5; b<=1.5; b+=3.0/lines)) do
-       for ((a=-2.0; a<=1; a+=3.0/columns)) do
-           for ((p=0.0, q=0.0, i=0; p*p+q*q < 4 && i < 32; i++)) do
-               ((pnew=p*p-q*q+a, q=2*p*q+b, p=pnew))
-           done
-           ((colour=(i/4)%8))
-            echo -n "\\e[4${colour}m "
-        done
-        echo
-    done
-}
 
 
 function update_term_title {
