@@ -92,7 +92,7 @@ bindkey "^[r" history-beginning-search-backward
 setopt prompt_bang # ! in prompt will be replaced by history number
 
 autoload -U colors && colors
-prev_exit="%(?..%{$fg[red]%}[%?])"
+
 
 if [[ -z $SSH_CONNECTION ]];
 then
@@ -116,9 +116,11 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git*' formats "%{$fg[red]%}%u%c%{$fg[$NORMAL_PROMPT]%}[%b]%{$reset_color%}"
 
-export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~$prev_exit >%{$reset_color%} "
+export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~ >%{$reset_color%} "
 
 
+# Get zsh to report if the command returns a failure code
+setopt print_exit_value
 
 # autopushd pushes directiories onto a stack.  Stack can be viewed
 # with dirs -v and then directory can be moved to with ~1, ~2 etc.
@@ -190,7 +192,7 @@ bindkey "^[1" insert-sudo # M-1
 # are ancient compared with the current GNU ones installed
 # using mac ports
 
-MACPORT_UTILS=(shuf sort sed)
+MACPORT_UTILS=(find shuf sort sed)
 MACPORT_PATH=/opt/local/bin
 for UTIL in $MACPORT_UTILS
 do
