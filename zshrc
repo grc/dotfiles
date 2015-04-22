@@ -187,6 +187,7 @@ bindkey "^[1" insert-sudo # M-1
 # are ancient compared with the current GNU ones installed
 # using mac ports
 
+
 MACPORT_UTILS=(find shuf sort sed)
 MACPORT_PATH=/opt/local/bin
 for UTIL in $MACPORT_UTILS
@@ -234,5 +235,5 @@ function update_term_title {
 
 
 function chpwd {
-    update_term_title ${${(D)PWD}#*/*/} # No more than two directories, in ~ form
+    update_term_title ${${(D)PWD}#*/*/}/ # No more than two directories, in ~ form
 }
