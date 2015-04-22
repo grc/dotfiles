@@ -28,7 +28,7 @@ fpath=(~/zsh $fpath)
 # Use emacsclient as the default editor, firing up an emacs server if
 # there isn't one running already.
 export EDITOR='emacsclient -c'
-export ALTERNATE_EDITOR='emacs'l
+export ALTERNATE_EDITOR='emacs'
 
 
 alias uxterm=xterm
@@ -96,7 +96,9 @@ setopt prompt_bang # ! in prompt will be replaced by history number
 
 autoload -U colors && colors
 
-
+# Set the prompt colour according to whether or not we are connected
+# via an ssh session.  This makes it somewhat easier to sopt when
+# you're working on a remote machine.
 if [[ -z $SSH_CONNECTION ]];
 then
     # we are not ssh'd in
@@ -125,7 +127,7 @@ export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~ >%{$reset_color%} "
 # Get zsh to report if the command returns a failure code
 setopt print_exit_value
 
-# autopushd pushes directiories onto a stack.  Stack can be viewed
+# autopushd pushes directories onto a stack.  Stack can be viewed
 # with dirs -v and then directory can be moved to with ~1, ~2 etc.
 setopt autocd autopushd pushdignoredups
 
@@ -175,20 +177,10 @@ bindkey '\C-x\C-e' edit-command-line
 
 
 
-# Native OSX coreutils is older than that available through macports
-# and doesn't include `shuf' amongst other things.  If we've installed coreutils,
-# set up aliases
-
-
 insert_sudo () { zle beginning-of-line; zle -U "sudo " }
 zle -N insert-sudo insert_sudo
 bindkey "^[1" insert-sudo # M-1
 
-
-
-
-# Syntax highlighting
-# source ~/git-repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 # A lot of the OSX default installed command line tools
@@ -219,40 +211,6 @@ then
     grep --count processor /proc/cpuinfo 
 fi
 }
-
-
-# Pexip development environment variables used by vagrant
-# On the MacBook Air we're a bit constrained for both memory and 
-# CPUS.
-if [[ $HOST == GilesAir* ]];
-then
-    # By default we'll use host only as it's less susceptible
-    # to disruption when we change wireless networks rtc
-    
-    export PEXDEV_NFS=1
-
-    # Bridge the vagrant VM to this interface
-    export PEXDEV_BRIDGED_ADAPTER="en0: Wi-Fi (AirPort)"
-    export PEXDEV_CPUS=2
-    export PEXDEV_MEMORY=2048
-fi
-
-# Directory shortcuts on my development laptop
-if [[ $HOST == GilesAir* ]];
-then
-    hash -d mcu="/Users/grc/pexdev/mcu"
-    hash -d it="/Users/grc/pexdev/IT"
-    hash -d license="/Users/grc/work/license"
-    hash -d vagrant="/Users/grc/pexdev/mcu/buildtools"
-    hash -d webmgt="/Users/grc/pexdev/mcu/si/web/management"
-    hash -d webrsrc="/Users/grc/pexdev/mcu/resources/web/static"
-    hash -d userdocs="/Users/grc/DropBox/PexShared/User documentation"
-fi
-
-export PYTHONPATH="/Users/grc/pexdev/mcu"
-
-# developmant shortcuts
-alias vssh='ORIGINAL_DIR=$(pwd);~vagrant; vagrant up; vagrant ssh; cd $ORIGINAL_DIR'
 
 
 
