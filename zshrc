@@ -3,11 +3,14 @@
 # compatible with Linux too.
 
 
-
+# Setting up PATH
 # Macports uses the /opt/local/bin path
 [[ -x /opt/local/bin/port ]] && PATH=/opt/local/bin:$PATH
 
-[[ -x /opt/local/bin/aws ]] && PATH=/usr/local/bin:$PATH
+# Amazon Web Services tool installs to /usr/local/bin
+[[ -x /usr/local/bin/aws ]] && PATH=/usr/local/bin:$PATH
+
+# and my local bin directory
 export PATH=~/bin:$PATH  
 
 export TZ=Europe/London
@@ -25,7 +28,7 @@ fpath=(~/zsh $fpath)
 # Use emacsclient as the default editor, firing up an emacs server if
 # there isn't one running already.
 export EDITOR='emacsclient -c'
-export ALTERNATE_EDITOR='emacs'
+export ALTERNATE_EDITOR='emacs'l
 
 
 alias uxterm=xterm
