@@ -111,8 +111,17 @@ fi
 setopt prompt_subst
 
 autoload -Uz vcs_info
+
+
+
+# Update the xterm title with the name of the currently running
+# command.  precmd will then rewrite that again when the prompt is
+# displayed.
+preexec() { print -n "\e]0;$HOST: ${(q)1//(#m)[$'\000-\037\177-']/${(q)MATCH}}\a" }
+
 precmd()
 {
+    print -Pn "\e]0;%m: %~\a" } # Update the xterm title
     vcs_info
     RPROMPT=$vcs_info_msg_0_
 }
@@ -226,17 +235,6 @@ then
 fi
 
 
-
-
-function update_term_title {
-    # Set term title to $1
-    echo "\e]0; $1\e\\"
-}
-
-
-function chpwd {
-    update_term_title ${${(D)PWD}#*/*/}/ # No more than two directories, in ~ form
-}
 
 
 
