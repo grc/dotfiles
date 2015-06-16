@@ -237,3 +237,15 @@ function update_term_title {
 function chpwd {
     update_term_title ${${(D)PWD}#*/*/}/ # No more than two directories, in ~ form
 }
+
+
+
+
+# Change directory to that containing the file in the currently active
+# emacs buffer.  THe (Q) parameter expansion flag removes a level of
+# quoting.
+cde() {
+    cd ${(Q)$(emacsclient -e '(with-current-buffer
+                               (window-buffer)
+                               default-directory) ')}
+}
