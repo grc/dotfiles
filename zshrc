@@ -117,11 +117,11 @@ autoload -Uz vcs_info
 # Update the xterm title with the name of the currently running
 # command.  precmd will then rewrite that again when the prompt is
 # displayed.
-preexec() { print -n "\e]0;$HOST: ${(q)1//(#m)[$'\000-\037\177-']/${(q)MATCH}}\a" }
+preexec() { print -n "\e]0;${HOST:r} ${(q)1//(#m)[$'\000-\037\177-']/${(q)MATCH}}\a" }
 
 precmd()
 {
-    print -Pn "\e]0;%m: %~\a" } # Update the xterm title
+    print -Pn "\e]0;%m: %~\a"  # Update the xterm title
     vcs_info
     RPROMPT=$vcs_info_msg_0_
 }
