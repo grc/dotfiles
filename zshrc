@@ -284,3 +284,14 @@ up() {
 
 [[ $TERM = "dumb" ]] && unsetopt zle && PS1='$ '
 
+# Persist directory stack across sessions
+# Again from http://chneukirchen.org/blog/category/zsh.html
+DIRSTACKSIZE=9
+DIRSTACKFILE=~/.zdirs
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
