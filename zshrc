@@ -3,6 +3,7 @@
 # compatible with Linux too.
 
 
+
 # Setting up PATH
 # Macports uses the /opt/local/bin path
 [[ -x /opt/local/bin/port ]] && PATH=/opt/local/bin:$PATH
@@ -249,6 +250,7 @@ cde() {
 }
 
 
+
 # up: move up the directory stack either a numeric amount or to a
 # directory with the required prefix.
 #
@@ -279,3 +281,6 @@ up() {
        fi
   esac
 }
+
+[[ $TERM = "dumb" ]] && unsetopt zle && PS1='$ '
+
