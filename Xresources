@@ -21,7 +21,8 @@ URxvt.keysym.Shift-Down: command:\033]721;1\007
 URxvt.keysym.C-=: command:\033]710;xft:Inconsolata:pixelsize=20\007
 
 
-URxvt.font: xft:Inconsolata, xft:Terminus
+URxvt.font: xft:Mono:size=10
+
 URxvt.insecure: true
 URxvt.perl-ext-common: default,matcher
 Urxvt.fading: 20
