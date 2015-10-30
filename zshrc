@@ -118,13 +118,20 @@ autoload -Uz vcs_info
 # Update the xterm title with the name of the currently running
 # command.  precmd will then rewrite that again when the prompt is
 # displayed.
-preexec() { print -n "\e]0;${HOST:r} ${(q)1//(#m)[$'\000-\037\177-']/${(q)MATCH}}\a" }
+
+preexec()
+{
+    [[ $TERM != "dumb" ]] && \
+        print -n "\e]0;${HOST:r} ${(q)1//(#m)[$'\000-\037\177-']/${(q)MATCH}}\a" }
 
 precmd()
 {
-    print -Pn "\e]0;%m: %~\a"  # Update the xterm title
-    vcs_info
-    RPROMPT=$vcs_info_msg_0_
+    if [[ $TERM != "dumb" ]]
+    then
+        print -Pn "\e]0;%m: %~\a"  # Update the xterm title
+        vcs_info
+        RPROMPT=$vcs_info_msg_0_
+    fi
 }
 
 zstyle ':vcs_info:*' check-for-changes true
@@ -282,7 +289,7 @@ up() {
   esac
 }
 
-[[ $TERM = "dumb" ]] && unsetopt zle && PS1='$ '
+[[ $TERM = "dumb" ]] && unsetopt zle && PROMPT='$ '
 
 # Persist directory stack across sessions
 # Again from http://chneukirchen.org/blog/category/zsh.html
