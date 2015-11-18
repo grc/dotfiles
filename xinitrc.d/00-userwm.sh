@@ -6,3 +6,6 @@ export INFOPATH
 
 #xset +fp ~/local/lib/X11/fonts
 export LANG=en_GB.UTF-8
+
+cd
+
