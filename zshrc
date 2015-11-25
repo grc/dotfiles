@@ -205,17 +205,19 @@ bindkey "^[1" insert-sudo # M-1
 # using mac ports
 
 
-MACPORT_UTILS=(find shuf sort sed)
-MACPORT_PATH=/opt/local/bin
-for UTIL in $MACPORT_UTILS
-do
-    NEW_PATH=${MACPORT_PATH}/g${UTIL}
-    if [[ -x $NEW_PATH ]]
-    then
-	alias $UTIL=$NEW_PATH
-    fi
-done
-    
+if [[ $OSTYPE == darwin* ]];
+then
+    MACPORT_UTILS=(date find shuf sort sed)
+    MACPORT_PATH=/opt/local/bin
+    for UTIL in $MACPORT_UTILS
+    do
+        NEW_PATH=${MACPORT_PATH}/g${UTIL}
+        if [[ -x $NEW_PATH ]]
+        then
+	    alias $UTIL=$NEW_PATH
+        fi
+    done
+fi
 	    
 
 
