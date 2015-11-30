@@ -22,7 +22,7 @@ export INFOPATH=~/info:/usr/local/share/info/:/usr/share/info/:/usr/local/share/
 
 bindkey -me 2> /dev/null
 
-
+# Add path to local completions.  
 fpath=(~/zsh $fpath)
 
 
@@ -249,6 +249,31 @@ fi
 
 
 
+
+[[ $TERM = "dumb" ]] && unsetopt zle && PROMPT='$ '
+
+# Persist directory stack across sessions
+# Again from http://chneukirchen.org/blog/category/zsh.html
+DIRSTACKSIZE=9
+DIRSTACKFILE=~/.zdirs
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+
+
+
+
+
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
+
+
+
+# Utility functions
+
+
 # Change directory to that containing the file in the currently active
 # emacs buffer.  THe (Q) parameter expansion flag removes a level of
 # quoting.
@@ -291,16 +316,14 @@ up() {
   esac
 }
 
-[[ $TERM = "dumb" ]] && unsetopt zle && PROMPT='$ '
 
-# Persist directory stack across sessions
-# Again from http://chneukirchen.org/blog/category/zsh.html
-DIRSTACKSIZE=9
-DIRSTACKFILE=~/.zdirs
-if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
-  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
-  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
-fi
-chpwd() {
-  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+# Print ps info about named process
+pg () {
+    if pid=$(pgrep -f -d ',' $1 2> /dev/null) 
+    then
+        ps uww -p $pid
+    else
+	echo 'No matching process found.' >&2
+        return 1
+    fi
 }
