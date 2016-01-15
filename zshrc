@@ -98,7 +98,7 @@ setopt prompt_bang # ! in prompt will be replaced by history number
 autoload -U colors && colors
 
 # Set the prompt colour according to whether or not we are connected
-# via an ssh session.  This makes it somewhat easier to sopt when
+# via an ssh session.  This makes it somewhat easier to spot when
 # you're working on a remote machine.
 if [[ -z $SSH_CONNECTION ]];
 then
@@ -112,6 +112,9 @@ fi
 setopt prompt_subst
 
 autoload -Uz vcs_info
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:git*' formats "%{$fg[red]%}%u%c%{$fg[$NORMAL_PROMPT]%}[%b]%{$reset_color%}"
 
 
 
@@ -134,9 +137,6 @@ precmd()
     fi
 }
 
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git*' formats "%{$fg[red]%}%u%c%{$fg[$NORMAL_PROMPT]%}[%b]%{$reset_color%}"
 
 export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~ >%{$reset_color%} "
 
@@ -270,7 +270,7 @@ chpwd() {
 }
 
 
-
+#
 # Utility functions
 
 

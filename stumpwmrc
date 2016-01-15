@@ -114,7 +114,7 @@ String is colour coded to warn of unknown or missing networks"
       (t (concatenate 'string *bar-hi-color* info "^n ")))))
 
 (defun network-service-order ()
-  "Returns an ordered list of OSX network devices."
+  "Return an ordered list of OSX network devices."
   (assert (find :DARWIN *features*))
   (let ((shell-output (run-shell-command "networksetup -listnetworkserviceorder |\
 awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
@@ -143,7 +143,7 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
 (defun battery-level-string ()
   "Battery level indication, coloured for use in mode line"
   (let* ((bat-level (battery))
-	 (color-code (bar-zone-color bat-level 50 20 10 t)))
+	 (color-code (bar-zone-color bat-level 60 40 20 t)))
     (format nil "Battery: ~A~A%" color-code bat-level)))
 
 
