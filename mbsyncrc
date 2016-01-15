@@ -1,0 +1,62 @@
+# mbsync config
+
+IMAPAccount gmail-jujutsu
+Host imap.gmail.com
+User gileschamberlin@gmail.com
+UseIMAPS yes
+CertificateFile /usr/share/curl/ca-bundle.crt
+# Credentials are stored in an emacs authinfo file
+PassCmd "emacs --batch --eval '(princ(cadr(netrc-credentials \"personal\")))'"
+
+IMAPAccount gmail-work
+Host imap.gmail.com
+User giles@pexip.com
+UseIMAPS yes
+CertificateFile /usr/share/curl/ca-bundle.crt
+PassCmd "emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
+
+IMAPAccount local-jujutsu-acct
+Host localhost
+User jujutsuacct
+PassCmd  "emacs --batch --eval '(princ(cadr(netrc-credentials \"jujutsuacct\")))'"
+UseIMAPS no
+RequireSSL no
+
+
+IMAPAccount local-work-acct
+Host localhost
+User workacct
+PassCmd  "emacs --batch --eval '(princ(cadr(netrc-credentials \"workacct\")))'"
+UseIMAPS no
+RequireSSL no
+
+IMAPStore remote-jujutsu
+Account gmail-jujutsu
+
+IMAPStore remote-work
+Account gmail-work
+
+IMAPStore local-jujutsu
+Account local-jujutsu-acct
+
+IMAPStore local-work
+Account local-work-acct
+
+Channel jujutsu
+Master :remote-jujutsu:
+Slave :local-jujutsu:
+Sync All
+Create Slave
+
+Channel work
+Master :remote-work:
+Slave :local-work:
+Sync All
+Create Slave
+
+
+
+
+# Local Variables:
+# mode: conf-space
+# End:
