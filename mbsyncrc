@@ -6,19 +6,19 @@ User gileschamberlin@gmail.com
 UseIMAPS yes
 CertificateFile /usr/share/curl/ca-bundle.crt
 # Credentials are stored in an emacs authinfo file
-PassCmd "emacs --batch --eval '(princ(cadr(netrc-credentials \"personal\")))'"
+PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"personal\")))'"
 
 IMAPAccount gmail-work
 Host imap.gmail.com
 User giles@pexip.com
 UseIMAPS yes
 CertificateFile /usr/share/curl/ca-bundle.crt
-PassCmd "emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
+PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
 
 IMAPAccount local-jujutsu-acct
 Host localhost
 User jujutsuacct
-PassCmd  "emacs --batch --eval '(princ(cadr(netrc-credentials \"jujutsuacct\")))'"
+PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"jujutsuacct\")))'"
 UseIMAPS no
 RequireSSL no
 
@@ -26,7 +26,7 @@ RequireSSL no
 IMAPAccount local-work-acct
 Host localhost
 User workacct
-PassCmd  "emacs --batch --eval '(princ(cadr(netrc-credentials \"workacct\")))'"
+PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"workacct\")))'"
 UseIMAPS no
 RequireSSL no
 
