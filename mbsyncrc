@@ -16,7 +16,7 @@ CertificateFile /usr/share/curl/ca-bundle.crt
 PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
 
 IMAPAccount local-jujutsu-acct
-Host localhost
+Host 127.0.0.1
 User jujutsuacct
 PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"jujutsuacct\")))'"
 UseIMAPS no
@@ -24,7 +24,7 @@ RequireSSL no
 
 
 IMAPAccount local-work-acct
-Host localhost
+Host 127.0.0.1
 User workacct
 PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"workacct\")))'"
 UseIMAPS no
