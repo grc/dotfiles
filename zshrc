@@ -18,7 +18,15 @@ export TZ=Europe/London
 export LANG=en_GB.UTF-8
 
 
+# According to the tic man page, the following should be default
+# behaviour but zsh under OSX isn't finding /opt/local/share/terminfo
+export TERMINFO=/opt/local/share/terminfo
+
 export INFOPATH=~/info:/usr/local/share/info/:/usr/share/info/:/usr/local/share/info/
+
+
+
+
 
 bindkey -me 2> /dev/null
 
