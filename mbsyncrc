@@ -4,7 +4,7 @@ IMAPAccount gmail-jujutsu
 Host imap.gmail.com
 User gileschamberlin@gmail.com
 UseIMAPS yes
-CertificateFile /usr/share/curl/ca-bundle.crt
+CertificateFile /usr/local/share/curl/ca-bundle.crt
 # Credentials are stored in an emacs authinfo file
 PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"personal\")))'"
 
