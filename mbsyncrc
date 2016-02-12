@@ -12,7 +12,7 @@ IMAPAccount gmail-work
 Host imap.gmail.com
 User giles@pexip.com
 UseIMAPS yes
-CertificateFile /usr/share/curl/ca-bundle.crt
+CertificateFile /usr/local/share/curl/ca-bundle.crt
 PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
 
 IMAPAccount local-jujutsu-acct
