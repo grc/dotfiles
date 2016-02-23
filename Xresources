@@ -10,8 +10,8 @@ Emacs*font: Inconsolata
 
 
 ! Command string shortcuts for TANDBERG video endpoints
-URxvt.keysym.F12: xcom dial line:1 protocol:sip number:
-URxvt.keysym.Shift-F12: xcom dial line:2 protocol:sip number:
+URxvt.keysym.F12: string:xcom dial line:1 protocol:sip number:
+URxvt.keysym.Shift-F12: string:xcom dial line:2 protocol:sip number:
 
 ! Shift Up & Down for scrolling (no PageUp key on laptop keyboard
 URxvt.keysym.Shift-Up: command:\033]720;1\007
