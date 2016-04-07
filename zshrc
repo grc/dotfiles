@@ -215,7 +215,7 @@ bindkey "^[1" insert-sudo # M-1
 
 if [[ $OSTYPE == darwin* ]];
 then
-    MACPORT_UTILS=(date find shuf sort sed)
+    MACPORT_UTILS=(date find shuf sort sed wc)
     MACPORT_PATH=/opt/local/bin
     for UTIL in $MACPORT_UTILS
     do
