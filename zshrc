@@ -112,9 +112,12 @@ if [[ -z $SSH_CONNECTION ]];
 then
     # we are not ssh'd in
     NORMAL_PROMPT=green
+    ROOT_PROMPT=red
 else
     NORMAL_PROMPT=yellow
+    ROOT_PROMPT=yellow
 fi
+
 
 # prompt
 setopt prompt_subst
@@ -146,7 +149,7 @@ precmd()
 }
 
 
-export PROMPT="%{$fg[$NORMAL_PROMPT]%}! %n@%m %~ >%{$reset_color%} "
+export PROMPT="%{%(!~$fg[$ROOT_PROMPT]~$fg[$NORMAL_PROMPT]~)%}! %n@%m %~ >%{$reset_color%} "
 
 
 # Get zsh to report if the command returns a failure code
