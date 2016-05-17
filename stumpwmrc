@@ -85,7 +85,7 @@ one as this usually means that DHCP has failed."
 Returns nil if not connected to any network"
   (let ((ssid (string-right-trim
                '(#\Newline)
-               (stumpwm:run-shell-command "airport --getinfo | awk '/ SSID/{print $2}'" t))))
+               (stumpwm:run-shell-command "/usr/local/bin/airport --getinfo | awk '/ SSID/{print $2}'" t))))
     (if (> (length ssid) 0)
         ssid
         nil)))
@@ -134,6 +134,12 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
   (some #'network-status-display (network-service-order)))
 
 
+(defun vpn-status ()
+  "Return a string representation of the current VPN, nil in none."
+  (assert (find :DARWIN *features*))
+  (let ((nc-list (run-shell-command "scutil --nc list | grep onnected" t)))
+    nc-list))
+
 
 ;; Battery status
 
@@ -157,6 +163,9 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
 (defun fmt-network (ml)
   (network-status))
 
+(defun fmt-internet (ml)
+  (internet-status))
+
 (add-screen-mode-line-formatter #\B #'fmt-bat)
 (add-screen-mode-line-formatter #\W #'fmt-network)
 
@@ -171,3 +180,24 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
 (define-frame-preference "web"
     ;; frame raise lock (lock AND raise == jumpto)
     (0 t   t :class "Conkeror"))
+
+
+;; Load the layout I wish to use.  Minor glitch with screen size
+;; checking: if I have both laptop and attached screen then the screen
+;; size is taken to be the combined width of the two
+
+
+;; (dolist command '("emacs"
+;;                   "urxvt"
+;;                   "urxvt")
+;;         (run-shell-command command))
+
+
+;; (let ((screen-layout-file "/Users/grc/stump-layouts/narrow")
+;;       (wide-screen-threshold 2500))
+;;   (if (>= (screen-width (current-screen) wide-screen-threshold))
+;;     (setf screen-layout-file "/Users/grc/stump-layouts/wide"))
+;;   (if (probe-file screen-layout-file)
+;;       (restore-from-file screen-layout-file)))
+
+

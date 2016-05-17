@@ -18,7 +18,7 @@ URxvt.keysym.Shift-Up: command:\033]720;1\007
 URxvt.keysym.Shift-Down: command:\033]721;1\007
 
 ! Switch to a large font
-URxvt.keysym.C-=: command:\033]710;xft:Inconsolata:pixelsize=20\007
+URxvt.keysym.F1: command:\033]710;fixed\033\\
 
 
 URxvt.font:xft:Inconsolata,xft:Monospace:size=10

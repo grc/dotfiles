@@ -115,7 +115,7 @@ then
     ROOT_PROMPT=red
 else
     NORMAL_PROMPT=yellow
-    ROOT_PROMPT=yellow
+    ROOT_PROMPT=red
 fi
 
 
