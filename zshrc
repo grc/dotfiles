@@ -149,7 +149,7 @@ precmd()
 }
 
 
-export PROMPT="%{%(!~$fg[$ROOT_PROMPT]~$fg[$NORMAL_PROMPT]~)%}! %n@%m %3~ >%{$reset_color%} "
+export PROMPT="%{%(!.$fg[$ROOT_PROMPT].$fg[$NORMAL_PROMPT])%}! %n@%m %16<...<%~ >%{$reset_color%} "
 
 
 # Get zsh to report if the command returns a failure code
