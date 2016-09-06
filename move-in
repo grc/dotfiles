@@ -2,6 +2,7 @@
 # Set up symlinks to dot files
 DOTFILESDIR=~/git-repos/dotfiles
 DOTFILES=(aspell.conf
+          mbsyncrc
           stumpwmrc
           xmodmap
           Xresources
