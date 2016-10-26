@@ -3,7 +3,8 @@
 IMAPAccount gmail-jujutsu
 Host imap.gmail.com
 User gileschamberlin@gmail.com
-UseIMAPS yes
+SSLType IMAPS
+AuthMechs LOGIN
 CertificateFile /usr/local/share/curl/ca-bundle.crt
 # Credentials are stored in an emacs authinfo file
 PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"personal\")))'"
@@ -11,7 +12,8 @@ PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"pe
 IMAPAccount gmail-work
 Host imap.gmail.com
 User giles@pexip.com
-UseIMAPS yes
+SSLType IMAPS
+AuthMechs LOGIN
 CertificateFile /usr/local/share/curl/ca-bundle.crt
 PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
 
@@ -19,16 +21,16 @@ IMAPAccount local-jujutsu-acct
 Host 127.0.0.1
 User jujutsuacct
 PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"jujutsuacct\")))'"
-UseIMAPS no
-RequireSSL no
+AuthMechs PLAIN
+SSLType None
 
 
 IMAPAccount local-work-acct
 Host 127.0.0.1
 User workacct
 PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"workacct\")))'"
-UseIMAPS no
-RequireSSL no
+AuthMechs PLAIN
+SSLType None
 
 IMAPStore remote-jujutsu
 Account gmail-jujutsu
@@ -46,12 +48,14 @@ Channel jujutsu
 Master :remote-jujutsu:
 Slave :local-jujutsu:
 Sync All
-Create Slave
+MaxMessages 50000
+Create Slave 
 
 Channel work
 Master :remote-work:
 Slave :local-work:
 Sync All
+MaxMessages 50000
 Create Slave
 
 
