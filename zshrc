@@ -6,13 +6,11 @@
 
 # Setting up PATH
 # Macports uses the /opt/local/bin path
-[[ -x /opt/local/bin/port ]] && PATH=/opt/local/bin:$PATH
-
-# Amazon Web Services tool installs to /usr/local/bin
-[[ -x /usr/local/bin/aws ]] && PATH=/usr/local/bin:$PATH
+[[ -d /opt/local/bin ]] && PATH=/opt/local/bin:$PATH
+[[ -d /usr/local/bin ]] && PATH=/usr/local/bin:$PATH
 
 # and my local bin directory
-export PATH=~/bin:$PATH  
+export PATH=~/bin:/usr/local/bin:$PATH  
 
 export TZ=Europe/London
 export LANG=en_GB.UTF-8
@@ -57,7 +55,9 @@ fi
 # Determine external IP address
 alias myip4="w3m -4 -dump http://chroot-me.in/ip/ | head -n2"
 
-
+# Short cut to emacsclient.  -n argument, --no-wait is useful if you
+# want to open a file in emcase and continue with the terminal session.
+alias ec=emacsclient
 
 
 
@@ -327,7 +327,14 @@ up() {
   esac
 }
 
+ # Pexip Virtualbox config
 
+export PEXDEV_BRIDGED_ADAPTER="en0: Wi-Fi (AirPort)"
+export PEXDEV_CPUS=2
+
+
+
+ 
 # Print ps info about named process
 pg () {
     if pid=$(pgrep -f -d ',' $1 2> /dev/null) 
