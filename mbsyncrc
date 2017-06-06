@@ -55,7 +55,6 @@ Channel work
 Master :remote-work:
 Slave :local-work:
 Sync All
-MaxMessages 50000
 Create Slave
 
 
