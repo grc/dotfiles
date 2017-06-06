@@ -182,22 +182,23 @@ awk 'BEGIN {FS=\"[:,]\"}/Hardware Port/ {print $2}'" t)))
     (0 t   t :class "Conkeror"))
 
 
-;; Load the layout I wish to use.  Minor glitch with screen size
-;; checking: if I have both laptop and attached screen then the screen
-;; size is taken to be the combined width of the two
+;; Load the layout I wish to use.  Layout varies depending on the
+;; width of the primary monitor, or head,
+
+;(dolist (command '("emacs"
+;                   "urxvt"
+;                   "urxvt"))
+;  (run-shell-command command))
 
 
-;; (dolist command '("emacs"
-;;                   "urxvt"
-;;                   "urxvt")
-;;         (run-shell-command command))
+;(let ((screen-layout-file "/Users/grc/stump-layouts/narrow")
+;      (wide-head-threshold 2500))
+;  (if (>= (head-width (first
+;                       (screen-heads (first *screen-list*))))
+;          wide-head-threshold)
+;      (setf screen-layout-file "/Users/grc/stump-layouts/wide"))
+;  (if (probe-file screen-layout-file)
+;      (restore-from-file screen-layout-file)))
 
-
-;; (let ((screen-layout-file "/Users/grc/stump-layouts/narrow")
-;;       (wide-screen-threshold 2500))
-;;   (if (>= (screen-width (current-screen) wide-screen-threshold))
-;;     (setf screen-layout-file "/Users/grc/stump-layouts/wide"))
-;;   (if (probe-file screen-layout-file)
-;;       (restore-from-file screen-layout-file)))
 
 
