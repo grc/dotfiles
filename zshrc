@@ -331,8 +331,10 @@ up() {
 
 export PEXDEV_BRIDGED_ADAPTER="en0: Wi-Fi (AirPort)"
 export PEXDEV_CPUS=2
-
-
+export PEXDEV_MCU_NAME="grc-mcu"
+export PEXDEV_MEMORY=8192
+export PEXDEV_NFS=1 # If this is defined we end up using a private
+                    # rather than bridged network
 
  
 # Print ps info about named process
@@ -345,3 +347,14 @@ pg () {
         return 1
     fi
 }
+
+
+
+
+# Directory shortcuts
+
+# Pexip wiki, copied from github
+hash -d wiki=~/work/wiki
+
+# Pexip MCU build directory and Vagrant home
+hash -d buildtools=~/mcu/buildtools
