@@ -2,25 +2,26 @@
 
 IMAPAccount gmail-jujutsu
 Host imap.gmail.com
-User gileschamberlin@gmail.com
+UserCmd  "emacs --batch -l ~/.emacs.d/get-credentials.el --eval '(get-user \"personal\")'"
 SSLType IMAPS
 AuthMechs LOGIN
-CertificateFile /usr/local/share/curl/ca-bundle.crt
-# Credentials are stored in an emacs authinfo file
-PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"personal\")))'"
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PassCmd "emacs --batch -l ~/.emacs.d/get-credentials.el --eval '(get-passwd \"personal\")'"
+Timeout 100
 
-IMAPAccount gmail-work
-Host imap.gmail.com
-User giles@pexip.com
+
+IMAPAccount microsoft-work-acct
+Host outlook.office365.com
+UserCmd  "emacs --batch -l ~/.emacs.d/get-credentials.el --eval '(get-user \"pexip\")'"
 SSLType IMAPS
-AuthMechs LOGIN
-CertificateFile /usr/local/share/curl/ca-bundle.crt
-PassCmd "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"work\")))'"
+AuthMechs XOAUTH2
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PassCmd  "$HOME/bin/mutt_oauth2.py $HOME/bin/o365.tokens"
 
 IMAPAccount local-jujutsu-acct
 Host 127.0.0.1
 User jujutsuacct
-PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"jujutsuacct\")))'"
+PassCmd "emacs --batch -l ~/.emacs.d/get-credentials.el --eval '(get-passwd \"jujutsuacct\")'"
 AuthMechs PLAIN
 SSLType None
 
@@ -28,7 +29,7 @@ SSLType None
 IMAPAccount local-work-acct
 Host 127.0.0.1
 User workacct
-PassCmd  "/Users/grc/bin/emacs --batch --eval '(princ(cadr(netrc-credentials \"workacct\")))'"
+PassCmd "emacs --batch -l ~/.emacs.d/get-credentials.el --eval '(get-passwd \"workacct\")'"
 AuthMechs PLAIN
 SSLType None
 
@@ -36,26 +37,30 @@ IMAPStore remote-jujutsu
 Account gmail-jujutsu
 
 IMAPStore remote-work
-Account gmail-work
+Account microsoft-work-acct
 
 IMAPStore local-jujutsu
 Account local-jujutsu-acct
+
 
 IMAPStore local-work
 Account local-work-acct
 
 Channel jujutsu
-Master :remote-jujutsu:
-Slave :local-jujutsu:
+Far :remote-jujutsu:
+Near :local-jujutsu:
 Sync All
 MaxMessages 50000
-Create Slave 
+Create Near
+CopyArrivalDate yes
 
 Channel work
-Master :remote-work:
-Slave :local-work:
+Far :remote-work:
+Near :local-work:
 Sync All
-Create Slave
+MaxMessages 50000
+Create Near
+CopyArrivalDate yes
 
 
 
